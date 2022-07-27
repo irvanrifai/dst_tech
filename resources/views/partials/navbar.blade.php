@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <div class="container">
-      <a class="navbar-brand text-light" href="/"><b>Export & Import Data KTP</b></a>
+      <a class="navbar-brand text-light" href="/"><b>Jual Beli DST</b></a>
       <div style="float: right">
       <div class="collapse navbar-collapse" id="navbarScroll">
         @auth
@@ -22,11 +22,6 @@
                 </ul>
             </li>
             </ul>
-            @else
-            <form class="d-flex" action="/" >
-                <input class="form-control me-2" type="text" placeholder="Masukkan kata" name="cari" value="{{ request('cari') }}">
-                <button class="btn btn-outline-light" type="submit">Cari</button>
-            </form>
             @endauth
         </div>
       </div>

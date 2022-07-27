@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Http\Requests\StorependudukRequest;
 use App\Http\Requests\UpdatependudukRequest;
 
-class PendudukController extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,11 @@ class PendudukController extends Controller
      */
     public function index()
     {
-        return view('admin', [
-            "title" => "E-I KTP | Admin",
-            "data" => penduduk::latest()->get(),
-            "jumlahData" => penduduk::all()->count(),
-            "userLoggedIn" => User::all()->count()
+        return view('welcomee', [
+            'title' => 'welcome',
+            // 'data' => penduduk::latest()->get(),
+            // 'jumlahData' => penduduk::all()->count(),
+            // 'userLoggedIn' => User::all()->count(),
         ]);
     }
 
@@ -91,7 +91,9 @@ class PendudukController extends Controller
         } else {
             // dd('data gagal ditambah');
             $request->session()->flash('failed_c', 'Add data KTP unsuccessfull!');
-            return redirect('/PendudukController')->withInput()->withErrors($request->validated($rules));
+            return redirect('/PendudukController')
+                ->withInput()
+                ->withErrors($request->validated($rules));
         }
         // $request->session()->flash('success_c', 'Add data KTP successfull!');
         // return redirect('/PendudukController');
@@ -105,7 +107,7 @@ class PendudukController extends Controller
      */
     public function show($id)
     {
-        // 
+        //
     }
 
     /**
@@ -117,7 +119,7 @@ class PendudukController extends Controller
     public function edit(penduduk $penduduk)
     {
         return view('admin', [
-            'data' => $penduduk
+            'data' => $penduduk,
         ]);
     }
 
@@ -170,7 +172,6 @@ class PendudukController extends Controller
 
         //     return redirect('/PendudukController')->withInput();
         // };
-
 
         // // $validatedData['password'] = bcrypt($validatedData['password']);
         // // $validatedData['user_id'] = auth()->user()->id;

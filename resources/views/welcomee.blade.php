@@ -96,24 +96,6 @@
                 <div class="row">
                     <h3>User Activity</h3>
 
-                    <!-- total data ktp -->
-                    <div class="col-xl-4 col-md-6 mb-4 mt-3">
-                        <div class="card border-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jumlah Data
-                                            KTP</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahData }}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-file fa-2x text-gray-300" style="color:darkblue; opacity:60%;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- total user -->
                     <div class="col-xl-4 col-md-6 mb-4 mt-3">
                         <div class="card border-danger shadow h-100 py-2">
@@ -141,19 +123,11 @@
     {{-- tabel data --}}
     <div class="row mt-4">
         <div class="col">
-            <h3>Pengelolaan Data KTP</h3>
+            <h3>Data produk</h3>
             <button type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#tambah"><i
                     class="fa fa-plus"></i>
                 Tambah data
             </button>
-            <div style="float: right;">
-                <button type="button" class="btn btn-outline-success my-3" data-bs-toggle="modal"
-                    data-bs-target="#import_d"><i class="fa fa-file-arrow-down"></i>
-                    Import
-                </button>
-                <a align="right" class="btn btn-outline-primary no-print" data-bs-toggle="modal"
-                    data-bs-target="#export_d"><i class="fa fa-file-export"></i> Export</a>
-            </div>
             <div class="table-responsive">
                 <table id="tb_ktp" class="table">
                     <thead>
@@ -169,31 +143,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $d)
-                            <tr>
-                                <td scope="row">{{ $loop->iteration }}</td>
-                                {{-- <td><img src="https://source.unsplash.com/100x120/?man" alt=""></td> --}}
-                                <td><img src="img/SD-default-image.png" width="100" height="110" alt="">
-                                </td>
-                                <td>{{ $d->NIK }}</td>
-                                <td>{{ $d->nama }}</td>
-                                <td>{{ $d->tm_lahir }}, {{ $d->tgl_lahir }}</td>
-                                <td>{{ $d->jk }}</td>
-                                <td>{{ $d->add }}, RT {{ $d->rt }}/ RW {{ $d->rw }},
-                                    {{ $d->kel }}, {{ $d->kec }}, {{ $d->kab }}</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <a data-bs-toggle="modal" data-bs-target="#edit<?= $d['id'] ?>"><span
-                                                class="badge bg-warning text-dark"><i class="fa fa-pencil"></i></span></a>
-                                        <a data-bs-toggle="modal" class="mx-1"
-                                            data-bs-target="#hapus<?= $d['id'] ?>"><span class="badge bg-danger"><i
-                                                    class="fa fa-trash"></i></span></a>
-                                        <a data-bs-toggle="modal" data-bs-target="#detail<?= $d['id'] ?>"><span
-                                                class="badge bg-info"><i class="fa-solid fa-info mx-1"></i></span></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                        {{-- @foreach ($data as $d) --}}
+                        <tr>
+                            {{-- <td scope="row">{{ $loop->iteration }}</td> --}}
+                            {{-- <td><img src="https://source.unsplash.com/100x120/?man" alt=""></td> --}}
+                            <td><img src="img/SD-default-image.png" width="100" height="110" alt="">
+                            </td>
+                            {{-- <td>{{ $d->NIK }}</td> --}}
+                            {{-- <td>{{ $d->nama }}</td> --}}
+                            {{-- <td>{{ $d->tm_lahir }}, {{ $d->tgl_lahir }}</td> --}}
+                            {{-- <td>{{ $d->jk }}</td> --}}
+                            {{-- <td>{{ $d->add }}, RT {{ $d->rt }}/ RW {{ $d->rw }}, --}}
+                            {{-- {{ $d->kel }}, {{ $d->kec }}, {{ $d->kab }}</td> --}}
+                            <td>
+                                <div class="d-flex">
+                                    <a data-bs-toggle="modal" data-bs-target="#edit<?= $d['id'] ?>"><span
+                                            class="badge bg-warning text-dark"><i class="fa fa-pencil"></i></span></a>
+                                    <a data-bs-toggle="modal" class="mx-1" data-bs-target="#hapus<?= $d['id'] ?>"><span
+                                            class="badge bg-danger"><i class="fa fa-trash"></i></span></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#detail<?= $d['id'] ?>"><span
+                                            class="badge bg-info"><i class="fa-solid fa-info mx-1"></i></span></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {{-- @endforeach --}}
                     </tbody>
                 </table>
             </div>
@@ -858,171 +831,4 @@
             </div>
         </div>
     @endforeach
-
-    {{-- modal untuk detail data --}}
-    @foreach ($data as $d)
-        <div class="modal fade" id="detail<?= $d['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Detail data KTP bernama <span
-                                class="text-uppercase">{{ $d->nama }}</span></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div align="center" class="mb-2">
-                                <h5 class="text-uppercase">Provinsi {{ $d->provinsi }}</h5>
-                                <h5 class="text-uppercase">Kabupaten {{ $d->kab }}</h5>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="text-uppercase fs-5">nik : {{ $d->NIK }}</h6>
-                                <h6 class="text-uppercase fs-6">Nama : {{ $d->nama }}</h6>
-                                <h6 class="text-uppercase fs-6">tempat/tgl lahir : {{ $d->tm_lahir }},
-                                    {{ $d->tgl_lahir }}</h6>
-                                <h6 class="text-uppercase fs-6">alamat : {{ $d->add }}</h6>
-                                <h6 class="text-uppercase fs-6"> rt/rw : {{ $d->rt }}/{{ $d->rw }}</h6>
-                                <h6 class="text-uppercase fs-6"> kecamatan : {{ $d->kec }}</h6>
-                                <h6 class="text-uppercase fs-6"> kelurahan : {{ $d->kel }}</h6>
-                                <h6 class="text-uppercase fs-6">agama : {{ $d->agama }}</h6>
-                                <h6 class="text-uppercase fs-6">status perkawinan : {{ $d->status }}</h6>
-                                <h6 class="text-uppercase fs-6">pekerjaan : {{ $d->pekerjaan }}</h6>
-                                <h6 class="text-uppercase fs-6">kewarganegaraan : {{ $d->wn }}</h6>
-                                <h6 class="text-uppercase fs-6">berlaku hingga : seumur hidup</h6>
-                            </div>
-                            <div class="col-md-4">
-                                {{-- <img src="https://source.unsplash.com/200x240/?man" alt=""><br> --}}
-                                <img src="img/SD-default-image.png" width="90" height="100" alt=""><br>
-                                <div align="center">
-                                    <small class="text-uppercase">{{ $d->kab }}</small><br>
-                                    <small class="text-uppercase">{{ $d->created_at }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-
-    <!-- modal untuk menampilkan data yang ditentukan (with export to pdf/csv) -->
-    <div class="modal fade" id="export_d" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel2">Data Penduduk</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="print-area" id="laporan_cetak_i">
-                    <div class="modal-body">
-                        <div class="row table-responsive">
-                            <div class="col">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">NIK</th>
-                                            <th scope="col">Nama</th>
-                                            <th scope="col">Tempat/Tgl Lahir</th>
-                                            <th scope="col">Jenis kelamin</th>
-                                            <th scope="col">Alamat</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{-- <?php $i = 1; ?>
-                                    <?php foreach ($aset as $a_bem) : ?>
-                                        <tr>
-                                            <td scope="row"><?= $i++ ?></td>
-                                            <td><?= $a_bem['id_inventaris'] ?></td>
-                                            <td><?= $a_bem['nama_aset'] ?></td>
-                                            <td><?= $a_bem['jumlah_kapasitas'] ?></td>
-                                            <td><?= $a_bem['status'] ?></td>
-                                            <td><?= $a_bem['kondisi'] ?></td>
-                                        </tr>
-                                    <?php endforeach; ?> --}}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="bi bi-printer btn btn-danger no-print" href="javascript:printDiv('laporan_cetak_i');">
-                        Export to pdf</a>
-                    <a class="bi bi-printer btn btn-success no-print" href="javascript:printDiv('laporan_cetak_i');">
-                        Export to csv</a>
-                    <!-- <button class="bi bi-arrow-left-square btn btn-primary" data-bs-target="#rentang" data-bs-toggle="modal"> Kembali</button> -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- modal untuk menampilkan data yang ditentukan (with import from csv) -->
-    <div class="modal fade" id="import_d" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel2">Data Penduduk</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="print-area" id="laporan_cetak_i">
-                    <div class="modal-body">
-                        <div class="row table-responsive">
-                            <div class="col">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">NIK</th>
-                                            <th scope="col">Nama</th>
-                                            <th scope="col">Tempat/Tgl Lahir</th>
-                                            <th scope="col">Jenis kelamin</th>
-                                            <th scope="col">Alamat</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{-- <?php $i = 1; ?>
-                                    <?php foreach ($aset as $a_bem) : ?>
-                                        <tr>
-                                            <td scope="row"><?= $i++ ?></td>
-                                            <td><?= $a_bem['id_inventaris'] ?></td>
-                                            <td><?= $a_bem['nama_aset'] ?></td>
-                                            <td><?= $a_bem['jumlah_kapasitas'] ?></td>
-                                            <td><?= $a_bem['status'] ?></td>
-                                            <td><?= $a_bem['kondisi'] ?></td>
-                                        </tr>
-                                    <?php endforeach; ?> --}}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="bi bi-printer btn btn-danger no-print" href="javascript:printDiv('laporan_cetak_i');">
-                        Import now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- script buat print halaman ajuan tertentu -->
-    <textarea id="printing-css" style="display:none;">.no-print{display: none}</textarea>
-    <iframe id="printing-frame" name="print_frame" src="about:blank" style="display:none;"></iframe>
-    <script type="text/javascript">
-        function printDiv(elementId) {
-            var a = document.getElementById('printing-css').value;
-            var b = document.getElementById(elementId).innerHTML;
-            window.frames["print_frame"].document.title = document.title;
-            window.frames["print_frame"].document.body.innerHTML = '<style>' + a + '</style>' + b;
-            window.frames["print_frame"].window.focus();
-            window.frames["print_frame"].window.print();
-        }
-    </script>
 @endsection

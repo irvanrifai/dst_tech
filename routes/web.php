@@ -20,7 +20,9 @@ use App\Http\Controllers\PenggunaController;
 
 Route::get('/', [homeController::class, 'index'])->middleware('guest');
 
-Route::get('/login', [loginController::class, 'index'])->name('login')->middleware('guest');
+Route::get('/login', [loginController::class, 'index'])
+    ->name('login')
+    ->middleware('guest');
 
 Route::post('/login', [loginController::class, 'authenticate']);
 
@@ -34,4 +36,4 @@ Route::post('/registrasi', [registrasiController::class, 'store']);
 
 // Route::get('/user', [PendudukController::class, 'index'])->middleware('auth');
 
-Route::resource('/PendudukController', PendudukController::class)->middleware('auth');
+Route::resource('/AuthController', AuthController::class)->middleware('auth');
