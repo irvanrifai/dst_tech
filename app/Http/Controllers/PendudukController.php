@@ -20,7 +20,7 @@ class produkController extends Controller
     {
         return view('welcomee', [
             'title' => 'welcome',
-            // 'data' => produk::latest()->get(),
+            'data' => produk::latest()->get(),
             // 'jumlahData' => produk::all()->count(),
             'userLoggedIn' => User::all()->count(),
         ]);

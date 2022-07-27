@@ -34,4 +34,3 @@ Route::get('/registrasi', [registrasiController::class, 'index'])->middleware('g
 Route::post('/registrasi', [registrasiController::class, 'store']);
 
 Route::resource('/PendudukController', PendudukController::class)->middleware('auth');
-// Route::resource('/AuthController', AuthController::class)->middleware('auth');

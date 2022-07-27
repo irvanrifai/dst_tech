@@ -132,40 +132,36 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Foto</th>
-                            <th scope="col">NIK</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Tempat/Tgl Lahir</th>
-                            <th scope="col">Jenis kelamin</th>
-                            <th scope="col">Alamat</th>
+                            <th scope="col">UUID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($data as $d) --}}
-                        <tr>
-                            {{-- <td scope="row">{{ $loop->iteration }}</td> --}}
-                            {{-- <td><img src="https://source.unsplash.com/100x120/?man" alt=""></td> --}}
-                            <td><img src="img/SD-default-image.png" width="100" height="110" alt="">
-                            </td>
-                            {{-- <td>{{ $d->NIK }}</td> --}}
-                            {{-- <td>{{ $d->nama }}</td> --}}
-                            {{-- <td>{{ $d->tm_lahir }}, {{ $d->tgl_lahir }}</td> --}}
-                            {{-- <td>{{ $d->jk }}</td> --}}
-                            {{-- <td>{{ $d->add }}, RT {{ $d->rt }}/ RW {{ $d->rw }}, --}}
-                            {{-- {{ $d->kel }}, {{ $d->kec }}, {{ $d->kab }}</td> --}}
-                            <td>
-                                <div class="d-flex">
-                                    <a data-bs-toggle="modal" data-bs-target="#edit"><span
-                                            class="badge bg-warning text-dark"><i class="fa fa-pencil"></i></span></a>
-                                    <a data-bs-toggle="modal" class="mx-1" data-bs-target="#hapus"><span
-                                            class="badge bg-danger"><i class="fa fa-trash"></i></span></a>
-                                    <a data-bs-toggle="modal" data-bs-target="#detail"><span class="badge bg-info"><i
-                                                class="fa-solid fa-info mx-1"></i></span></a>
-                                </div>
-                            </td>
-                        </tr>
-                        {{-- @endforeach --}}
+                        @foreach ($data as $d)
+                            <tr>
+                                <td scope="row">{{ $loop->iteration }}</td>
+                                <td>{{ $d->uuid }}</td>
+                                <td>{{ $d->name }}</td>
+                                <td>{{ $d->type }}</td>
+                                <td>{{ $d->price }}</td>
+                                <td>{{ $d->quantity }}</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a data-bs-toggle="modal" data-bs-target="#edit<?= $d['id'] ?>"><span
+                                                class="badge bg-warning text-dark"><i class="fa fa-pencil"></i></span></a>
+                                        <a data-bs-toggle="modal" class="mx-1"
+                                            data-bs-target="#hapus<?= $d['id'] ?>"><span class="badge bg-danger"><i
+                                                    class="fa fa-trash"></i></span></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#detail<?= $d['id'] ?>"><span
+                                                class="badge bg-info"><i class="fa-solid fa-info mx-1"></i></span></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -177,4 +173,228 @@
             $('#tb_ktp').DataTable();
         });
     </script>
+
+    <!-- modal untuk tambah data -->
+    <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah data baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form novalidate action="/PendudukController" role="form" method="POST"
+                    enctype="multipart/form-data" id="form_tambah" class="needs-validation">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="row mb-2 g-3">
+                                <div class="mb-3 col-md-3 form-group">
+                                    <label for="uuid" class="form-label">uuid</label><span
+                                        class="text-danger">*</span>
+                                    <input type="number" class="form-control @error('uuid') is-invalid @enderror"
+                                        name="uuid" id="uuid" placeholder="Nomor Induk Kependudukan" required
+                                        maxlength="16" value="{{ old('uuid') }}">
+                                    @error('uuid')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-3 form-group">
+                                    <label for="name" class="form-label">name</label><span
+                                        class="text-danger">*</span>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" id="name" placeholder="name lengkap" required
+                                        value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-3 form-group">
+                                    <label for="type" class="form-label">Type</label><span
+                                        class="text-danger">*</span>
+                                    <input type="text" class="form-control @error('type') is-invalid @enderror"
+                                        name="type" id="type" placeholder="Jakarta" required
+                                        value="{{ old('type') }}">
+                                    @error('type')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-3 form-group">
+                                    <label for="price" class="form-label">Price</label><span
+                                        class="text-danger">*</span>
+                                    <input type="date" class="form-control @error('price') is-invalid @enderror"
+                                        name="price" id="price" value="{{ old('price') }}">
+                                    @error('price')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-2 form-group">
+                                    <label for="quantity" class="form-label">Quantity</label><span
+                                        class="text-danger">*</span>
+                                    <select class="form-select @error('quantity') is-invalid @enderror" id="quantity"
+                                        name="quantity">
+                                        <option value="{{ old('quantity') ? old('quantity') : '' }}" selected disabled>
+                                            Pilih
+                                        </option>
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                        <option value="Tidak diketahui">Tidak diketahui</option>
+                                    </select>
+                                    @error('quantity')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button> -->
+                        <button type="submit" class="bi bi-plus-square btn btn-primary" id="btn_tambah"><i
+                                class="fa fa-plus"></i> Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal untuk edit data -->
+    @foreach ($data as $d)
+        <div class="modal fade" id="edit<?= $d['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editLabel">Edit data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/PendudukController/{{ $d->id }}" method="POST" role="form"
+                        enctype="multipart/form-data" class="needs-validation">
+                        @method('PUT')
+                        {{-- @method('PATCH') --}}
+                        @csrf
+                        <input type="hidden" name="berlaku" id="berlaku" value="Seumur Hidup">
+                        {{-- <input type="hidden" name="uuid" id="uuid" value="{{ $d->uuid }}"> --}}
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="row mb-2 g-3">
+                                    <div class="mb-3 col-md-3 form-group">
+                                        <label for="uuid" class="form-label">uuid</label><span
+                                            class="text-danger">*</span>
+                                        <input type="number" class="form-control @error('uuid') is-invalid @enderror"
+                                            name="uuid" id="uuid" placeholder="Nomor Induk Kependudukan" required
+                                            maxlength="16" value="{{ old('uuid', $d->uuid) }}">
+                                        @error('uuid')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-3 form-group">
+                                        <label for="name" class="form-label">name</label><span
+                                            class="text-danger">*</span>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                            name="name" id="name" placeholder="name lengkap" required
+                                            value="{{ old('name', $d->name) }}">
+                                        @error('name')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-3 form-group">
+                                        <label for="type" class="form-label">Type</label><span
+                                            class="text-danger">*</span>
+                                        <input type="text" class="form-control @error('type') is-invalid @enderror"
+                                            name="type" id="type" placeholder="Jakarta" required
+                                            value="{{ old('type', $d->type) }}">
+                                        @error('type')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-3 form-group">
+                                        <label for="price" class="form-label">Price</label><span
+                                            class="text-danger">*</span>
+                                        <input type="date" class="form-control @error('price') is-invalid @enderror"
+                                            name="price" id="price" value="{{ old('price', $d->price) }}">
+                                        @error('price')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3 col-md-2 form-group">
+                                        <label for="quantity" class="form-label">Quantity</label><span
+                                            class="text-danger">*</span>
+                                        <select class="form-select @error('quantity') is-invalid @enderror" id="quantity"
+                                            name="quantity">
+                                            <option value="{{ old('quantity', $d->quantity) }}" selected disabled>
+                                                {{ old('quantity', $d->quantity) }}</option>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                            <option value="Tidak diketahui">Tidak diketahui</option>
+                                        </select>
+                                        @error('quantity')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button> -->
+                            <button type="submit" class="bi bi-plus-square btn btn-primary" id="btn_tambah">
+                                Update</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    @endforeach
+
+    <!-- modal untuk hapus data -->
+    @foreach ($data as $d)
+        <div class="modal fade" id="hapus<?= $d['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Hapus data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/PendudukController/{{ $d->id }}" method="post"
+                            enctype="multipart/form-data">
+                            @method('delete')
+                            @csrf
+                            <div class="modal-body modal-lg">
+                                <h6 class="text-uppercase fs-5">uuid : {{ $d->uuid }}</h6>
+                                <h6 class="text-uppercase fs-6">name : {{ $d->name }}</h6>
+                                <hr>
+                                <div id="emailHelp" class="form-text">Apakah anda yakin akan menghapus data KTP atas name
+                                    {{ $d->name }}?</div>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="bi bi-close btn btn-secondary" data-bs-dismiss="modal">Batal</button> -->
+                                <button name="delete" class="bi bi-trash btn btn-danger"> Hapus</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
