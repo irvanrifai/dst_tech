@@ -156,12 +156,12 @@
                             {{-- {{ $d->kel }}, {{ $d->kec }}, {{ $d->kab }}</td> --}}
                             <td>
                                 <div class="d-flex">
-                                    <a data-bs-toggle="modal" data-bs-target="#edit<?= $d['id'] ?>"><span
+                                    <a data-bs-toggle="modal" data-bs-target="#edit"><span
                                             class="badge bg-warning text-dark"><i class="fa fa-pencil"></i></span></a>
-                                    <a data-bs-toggle="modal" class="mx-1" data-bs-target="#hapus<?= $d['id'] ?>"><span
+                                    <a data-bs-toggle="modal" class="mx-1" data-bs-target="#hapus"><span
                                             class="badge bg-danger"><i class="fa fa-trash"></i></span></a>
-                                    <a data-bs-toggle="modal" data-bs-target="#detail<?= $d['id'] ?>"><span
-                                            class="badge bg-info"><i class="fa-solid fa-info mx-1"></i></span></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#detail"><span class="badge bg-info"><i
+                                                class="fa-solid fa-info mx-1"></i></span></a>
                                 </div>
                             </td>
                         </tr>
