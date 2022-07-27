@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\produk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorependudukRequest;
-use App\Http\Requests\UpdatependudukRequest;
+use App\Http\Requests\StoreprodukRequest;
+use App\Http\Requests\UpdateprodukRequest;
 
-class PendudukController extends Controller
+class produkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +20,8 @@ class PendudukController extends Controller
     {
         return view('welcomee', [
             'title' => 'welcome',
-            // 'data' => penduduk::latest()->get(),
-            // 'jumlahData' => penduduk::all()->count(),
+            // 'data' => produk::latest()->get(),
+            // 'jumlahData' => produk::all()->count(),
             'userLoggedIn' => User::all()->count(),
         ]);
     }
@@ -38,30 +39,17 @@ class PendudukController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorependudukRequest  $request
+     * @param  \App\Http\Requests\StoreprodukRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorependudukRequest $request)
+    public function store(StoreprodukRequest $request)
     {
         $rules = [
-            'foto' => 'required|file|image|max:4096',
-            'NIK' => 'required|size:16|digits:16|unique:penduduk',
-            'nama' => 'required|max:50|string',
-            'tm_lahir' => 'required|max:50',
-            'tgl_lahir' => 'required|date',
-            'jk' => 'required',
-            'agama' => 'required',
-            'status' => 'required',
-            'goldar' => 'required',
-            'pekerjaan' => 'required|max:50',
-            'wn' => 'required',
-            'provinsi' => 'required|max:50',
-            'kab' => 'required|max:50',
-            'kec' => 'required|max:50',
-            'kel' => 'required|max:50',
-            'rt' => 'required',
-            'rw' => 'required',
-            'add' => 'required|max:50',
+            'uuid' => 'required',
+            'name' => 'required',
+            'type' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
         ];
 
         // $validatedData['password'] = bcrypt($validatedData['password']);
@@ -69,22 +57,22 @@ class PendudukController extends Controller
 
         if ($request->validate($rules)) {
             // produk::create($rules);
-            return redirect('/AuthController')->with('success_c', 'Add data KTP successfull!');
+            return redirect('/PendudukController')->with('success_c', 'Add successfull!');
         } else {
             // dd('data gagal ditambah');
-            $request->session()->flash('failed_c', 'Add data KTP unsuccessfull!');
-            return redirect('/AuthController')
+            $request->session()->flash('failed_c', 'Add unsuccessfull!');
+            return redirect('/PendudukController')
                 ->withInput()
                 ->withErrors($request->validated($rules));
         }
-        // $request->session()->flash('success_c', 'Add data KTP successfull!');
-        // return redirect('/AuthController');
+        // $request->session()->flash('success_c', 'Add successfull!');
+        // return redirect('/PendudukController');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\penduduk  $penduduk
+     * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -95,88 +83,52 @@ class PendudukController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\penduduk  $penduduk
+     * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    // public function edit(penduduk $penduduk)
-    // {
-    //     return view('admin', [
-    //         'data' => $penduduk,
-    //     ]);
-    // }
+    public function edit(produk $produk)
+    {
+        return view('welcomee', [
+            'data' => $produk,
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatependudukRequest  $request
-     * @param  \App\Models\penduduk  $penduduk
+     * @param  \App\Http\Requests\UpdateprodukRequest  $request
+     * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    // public function update(UpdatependudukRequest $request, penduduk $penduduk, $id)
-    // {
-    //     $rules = [
-    //         'foto' => 'required|file|image|max:4096',
-    //         'nama' => 'required|max:50|string',
-    //         'tm_lahir' => 'required|max:50',
-    //         'tgl_lahir' => 'required|date',
-    //         'jk' => 'required',
-    //         'agama' => 'required',
-    //         'status' => 'required',
-    //         'goldar' => 'required',
-    //         'pekerjaan' => 'required|max:50',
-    //         'wn' => 'required',
-    //         'provinsi' => 'required|max:50',
-    //         'kab' => 'required|max:50',
-    //         'kec' => 'required|max:50',
-    //         'kel' => 'required|max:50',
-    //         'rt' => 'required',
-    //         'rw' => 'required',
-    //         'add' => 'required|max:50',
-    //     ];
-    //     // kondisi untuk cek NIK belum jalan
-    //     if ($request->NIK != $penduduk->NIK) {
-    //         $rules['NIK'] = 'required|size:16|digits:16|unique:penduduk';
-    //     }
+    public function update(UpdateprodukRequest $request, produk $produk, $id)
+    {
+        $rules = [
+            'uuid' => 'required',
+            'name' => 'required',
+            'type' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+        ];
 
-    //     // dd($request->NIK, $penduduk->get('NIK'));
+        $validatedData = $request->validate($rules);
 
-    //     $validatedData = $request->validate($rules);
+        produk::where('id', $id)->update($validatedData);
 
-    //     penduduk::where('id', $id)->update($validatedData);
+        $request->session()->flash('success_u', 'Update successfull!');
 
-    //     $request->session()->flash('success_u', 'Update data KTP successfull!');
-
-    //     return redirect('/AuthController');
-
-    //     // if (!$validatedData = $request->validate($rules)) {
-    //     //     dd('data gagal ditambah');
-    //     //     $request->session()->flash('failed_u', 'Update data KTP unsuccessfull!');
-
-    //     //     return redirect('/AuthController')->withInput();
-    //     // };
-
-    //     // // $validatedData['password'] = bcrypt($validatedData['password']);
-    //     // // $validatedData['user_id'] = auth()->user()->id;
-
-    //     // penduduk::where('id', $id)
-    //     //     ->update($validatedData);
-
-    //     // $request->session()->flash('success_u', 'Update data KTP successfull!');
-
-    //     // // return redirect('/admin')->with('success_c', 'Add data KTP successfull!');
-    //     // return redirect('/AuthController');
-    // }
+        return redirect('/PendudukController');
+    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\penduduk  $penduduk
+     * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    // public function destroy(penduduk $penduduk, $id)
-    // {
-    //     penduduk::destroy($penduduk->id, $id);
+    public function destroy(produk $produk, $id)
+    {
+        produk::destroy($produk->id, $id);
 
-    //     return redirect('/AuthController')->with('success_d', 'Delete data KTP successfull!');
-    // }
+        return redirect('/PendudukController')->with('success_d', 'Delete successfull!');
+    }
 }

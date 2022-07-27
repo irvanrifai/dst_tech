@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class penduduk extends Model
+class produk extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,42 +17,37 @@ class penduduk extends Model
      * @var array<int, string>
      */
 
-    protected $table = 'penduduk';
+    protected $table = 'produk';
 
-    protected $fillable = [
-        'foto',
-        'NIK',
-        'nama',
-        'tm_lahir',
-        'tgl_lahir',
-        'jk',
-        'agama',
-        'status',
-        'goldar',
-        'pekerjaan',
-        'wn',
-        'provinsi',
-        'kab',
-        'kec',
-        'kel',
-        'rt',
-        'rw',
-        'add',
-    ];
+    // protected $fillable = [
+    //     'foto',
+    //     'NIK',
+    //     'nama',
+    //     'tm_lahir',
+    //     'tgl_lahir',
+    //     'jk',
+    //     'agama',
+    //     'status',
+    //     'goldar',
+    //     'pekerjaan',
+    //     'wn',
+    //     'provinsi',
+    //     'kab',
+    //     'kec',
+    //     'kel',
+    //     'rt',
+    //     'rw',
+    //     'add',
+    // ];
 
-    protected $guarded = [
-        'id',
-    ];
+    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast.
