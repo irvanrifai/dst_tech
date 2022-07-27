@@ -15,6 +15,7 @@ class StorepenggunaRequest extends FormRequest
     public function authorize()
     {
         return Auth::check();
+        // false;
     }
 
     /**
@@ -25,7 +26,7 @@ class StorepenggunaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-        ];
+                //
+            ];
     }
 }

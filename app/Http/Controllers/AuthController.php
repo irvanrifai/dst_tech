@@ -31,7 +31,7 @@ class AuthController extends Controller
      */
     public function create()
     {
-        return view('admin');
+        return view('welcomee');
     }
 
     /**
@@ -42,26 +42,7 @@ class AuthController extends Controller
      */
     public function store(StorependudukRequest $request)
     {
-        // kondisi belum berhasil checking validate or not
-        // $validatedData = $request->validate([
         $rules = [
-            // 'foto' => [
-            //     'rules' => 'required|file|image|max:4096',
-            //     'errors' => [
-            //         'required' => 'Foto wajib diupload',
-            //         'image' => 'Harus berupa gambar',
-            //         'max' => 'Maksimal foto berukuran 4 mb'
-            //     ]
-            // ],
-            // 'NIK' => [
-            //     'rules' => 'required|size:16|digits:16|unique:penduduk',
-            //     'errors' => [
-            //         'required' => 'NIK wajib diisi',
-            //         'size' => 'NIK harus 16 digit',
-            //         'digits' => 'NIK harus berupa angka',
-            //         'unique' => 'NIK sudah terdaftar, gunakan NIK lain'
-            //     ]
-            // ],
             'foto' => 'required|file|image|max:4096',
             'NIK' => 'required|size:16|digits:16|unique:penduduk',
             'nama' => 'required|max:50|string',
@@ -87,16 +68,16 @@ class AuthController extends Controller
 
         if ($request->validate($rules)) {
             penduduk::create($rules);
-            return redirect('/PendudukController')->with('success_c', 'Add data KTP successfull!');
+            return redirect('/AuthController')->with('success_c', 'Add data KTP successfull!');
         } else {
             // dd('data gagal ditambah');
             $request->session()->flash('failed_c', 'Add data KTP unsuccessfull!');
-            return redirect('/PendudukController')
+            return redirect('/AuthController')
                 ->withInput()
                 ->withErrors($request->validated($rules));
         }
         // $request->session()->flash('success_c', 'Add data KTP successfull!');
-        // return redirect('/PendudukController');
+        // return redirect('/AuthController');
     }
 
     /**
@@ -164,13 +145,13 @@ class AuthController extends Controller
 
         $request->session()->flash('success_u', 'Update data KTP successfull!');
 
-        return redirect('/PendudukController');
+        return redirect('/AuthController');
 
         // if (!$validatedData = $request->validate($rules)) {
         //     dd('data gagal ditambah');
         //     $request->session()->flash('failed_u', 'Update data KTP unsuccessfull!');
 
-        //     return redirect('/PendudukController')->withInput();
+        //     return redirect('/AuthController')->withInput();
         // };
 
         // // $validatedData['password'] = bcrypt($validatedData['password']);
@@ -182,7 +163,7 @@ class AuthController extends Controller
         // $request->session()->flash('success_u', 'Update data KTP successfull!');
 
         // // return redirect('/admin')->with('success_c', 'Add data KTP successfull!');
-        // return redirect('/PendudukController');
+        // return redirect('/AuthController');
     }
 
     /**
@@ -195,6 +176,6 @@ class AuthController extends Controller
     {
         penduduk::destroy($penduduk->id, $id);
 
-        return redirect('/PendudukController')->with('success_d', 'Delete data KTP successfull!');
+        return redirect('/AuthController')->with('success_d', 'Delete data KTP successfull!');
     }
 }

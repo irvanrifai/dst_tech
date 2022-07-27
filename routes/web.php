@@ -27,13 +27,10 @@ Route::get('/login', [loginController::class, 'index'])
 Route::post('/login', [loginController::class, 'authenticate']);
 
 Route::post('/logout', [loginController::class, 'logout']);
+Route::get('/logout', [loginController::class, 'logout']);
 
 Route::get('/registrasi', [registrasiController::class, 'index'])->middleware('guest');
 
 Route::post('/registrasi', [registrasiController::class, 'store']);
-
-// Route::get('/admin', [PendudukController::class, 'index'])->middleware('auth');
-
-// Route::get('/user', [PendudukController::class, 'index'])->middleware('auth');
 
 Route::resource('/AuthController', AuthController::class)->middleware('auth');
